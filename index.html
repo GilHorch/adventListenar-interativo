@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mini Página de Teste de Eventos JS</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background: #333;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem;
+      justify-content: center;
+    }
+
+    .evento-box {
+      background: #fff;
+      border-radius: 8px;
+      padding: 1rem;
+      width: 300px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .log {
+      font-family: monospace;
+      font-size: 0.9rem;
+      background: #000;
+      color: #0f0;
+      height: 120px;
+      overflow-y: auto;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    input, textarea, button {
+      margin-top: 0.5rem;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mini Página de Teste de Eventos</h1>
+    <p>Teste todos os eventos JavaScript em um só lugar!</p>
+  </header>
+
+  <main>
+    <!-- Clique -->
+    <div class="evento-box">
+      <h3>Clique</h3>
+      <button id="btnClick">Clique aqui</button>
+      <div class="log" id="logClick"></div>
+    </div>
+
+    <!-- Duplo clique -->
+    <div class="evento-box">
+      <h3>Duplo Clique</h3>
+      <img src="https://via.placeholder.com/100" id="imgDblClick" alt="Imagem" />
+      <div class="log" id="logDblClick"></div>
+    </div>
+
+    <!-- Teclado -->
+    <div class="evento-box">
+      <h3>Teclado (keydown)</h3>
+      <input type="text" id="inputKey" placeholder="Digite algo" />
+      <div class="log" id="logKey"></div>
+    </div>
+
+    <!-- Mouseover -->
+    <div class="evento-box">
+      <h3>Mouseover</h3>
+      <div id="boxHover" style="height: 50px; background: #ddd; text-align:center; line-height:50px;">Passe o mouse</div>
+      <div class="log" id="logHover"></div>
+    </div>
+
+    <!-- Scroll -->
+    <div class="evento-box">
+      <h3>Scroll</h3>
+      <div style="height: 100px; overflow-y: auto;" id="scrollBox">
+        <div style="height: 300px;">Role este conteúdo</div>
+      </div>
+      <div class="log" id="logScroll"></div>
+    </div>
+
+    <!-- Input -->
+    <div class="evento-box">
+      <h3>Input</h3>
+      <input type="text" id="inputLive" placeholder="Digite para testar" />
+      <div class="log" id="logInput"></div>
+    </div>
+
+    <!-- Resize -->
+    <div class="evento-box">
+      <h3>Resize (Janela)</h3>
+      <div class="log" id="logResize"></div>
+    </div>
+
+    <!-- Contextmenu -->
+    <div class="evento-box">
+      <h3>Contextmenu</h3>
+      <div id="ctxArea" style="height:50px; background:#eee; line-height:50px; text-align:center;">Clique direito aqui</div>
+      <div class="log" id="logCtx"></div>
+    </div>
+  </main>
+
+  <script>
+    const log = (id, msg) => {
+      const box = document.getElementById(id);
+      const div = document.createElement("div");
+      div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    };
+
+    document.getElementById("btnClick").addEventListener("click", () => log("logClick", "Clique detectado"));
+    document.getElementById("imgDblClick").addEventListener("dblclick", () => log("logDblClick", "Duplo clique na imagem"));
+    document.getElementById("inputKey").addEventListener("keydown", e => log("logKey", `Tecla: ${e.key}`));
+    document.getElementById("boxHover").addEventListener("mouseover", () => log("logHover", "Mouse passou por cima"));
+    document.getElementById("scrollBox").addEventListener("scroll", () => log("logScroll", "Scroll detectado"));
+    document.getElementById("inputLive").addEventListener("input", e => log("logInput", `Texto: ${e.target.value}`));
+    window.addEventListener("resize", () => log("logResize", `Nova largura: ${window.innerWidth}px`));
+    document.getElementById("ctxArea").addEventListener("contextmenu", e => {
+      e.preventDefault();
+      log("logCtx", "Clique direito bloqueado");
+    });
+  </script>
+</body>
+</html>
